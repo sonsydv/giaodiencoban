@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="content">
+      <header>
+        <h1>Library Management System</h1>
+      </header>
+
+      <nav>
+        <a href="#" onclick="showSection('home')">Trang chủ</a>
+        <a href="#" onclick="showSection('search')">Tra cứu sách</a>
+        <a href="#" onclick="showSection('borrow')">Mượn sách</a>
+        <a href="#" onclick="showSection('return')">Trả sách</a>
+        <a href="#" onclick="showSection('history')">Lịch sử mượn trả</a>
+        <div
+          style="display: inline; cursor: pointer; text-decoration: underline"
+          onclick="loadPHPContent()"
+        >
+          Quản lý Sách
+        </div>
+
+        <a href="login.php">Đăng nhập</a>
+      </nav>
+
+      <div class="container">
+        <section id="home">
+          <h2>Chào mừng đến với hệ thống quản lý thư viện</h2>
+          <p>Chọn một chức năng từ menu phía trên để bắt đầu.</p>
+        </section>
+
+        <section id="search" class="hidden">
+          <h2>Tra cứu sách</h2>
+          <form>
+            <input
+              type="text"
+              placeholder="Nhập tên sách hoặc tác giả"
+              id="searchInput"
+            />
+            <button type="button" onclick="searchBook()">Tìm kiếm</button>
+          </form>
+          <div id="searchResults"></div>
+        </section>
+
+        <section id="borrow" class="hidden">
+          <h2>Mượn sách</h2>
+          <form>
+            <input type="text" placeholder="Mã sách" id="borrowBookId" />
+            <input
+              type="text"
+              placeholder="Mã sinh viên"
+              id="borrowStudentId"
+            />
+            <button type="button" onclick="borrowBook()">Mượn sách</button>
+          </form>
+        </section>
+
+        <section id="return" class="hidden">
+          <h2>Trả sách</h2>
+          <form>
+            <input type="text" placeholder="Mã sách" id="returnBookId" />
+            <input
+              type="text"
+              placeholder="Mã sinh viên"
+              id="returnStudentId"
+            />
+            <button type="button" onclick="returnBook()">Trả sách</button>
+          </form>
+        </section>
+
+        <section id="history" class="hidden">
+          <h2>Lịch sử mượn trả</h2>
+          <form>
+            <input
+              type="text"
+              placeholder="Nhập mã sinh viên"
+              id="historyStudentId"
+            />
+            <button type="button" onclick="viewHistory()">Xem lịch sử</button>
+          </form>
+          <div id="historyResults"></div>
+        </section>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      function loadPHPContent() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "admin_books.php", true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById("content").innerHTML = xhr.responseText;
+          }
+        };
+        xhr.send();
+      }
+    </script>
+  </body>
+</html>
